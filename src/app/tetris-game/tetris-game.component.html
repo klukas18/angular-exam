@@ -1,0 +1,17 @@
+<tetris-core #game (lineCleared)="onLineCleared()"></tetris-core>
+
+<div class="buttons">
+    <button (click)="onStartButtonPressed()">Start</button>
+    <button (click)="onStopButtonPressed()">Stop</button>
+    <button (click)="onResetButtonPressed()">Reset</button>
+    <button (click)="onRotateButtonPressed()">Rotate</button>
+    <button (click)="onLeftButtonPressed()">Left</button>
+    <button (click)="onRightButtonPressed()">Right</button>
+    <button (click)="onDownButtonPressed()">Down</button>
+    <button (click)="onDropButtonPressed()">Drop</button>
+
+    <button type="button" (click)="endGame()">End Game</button>
+</div>
+
+
+<!-- <button (click)="onPauseButtonPressed()">Exit</button> -->

@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  height: 100vh;
+  width: 100%;
+  background-color: bisque;
+}
+
+.intro {
+  display: block;
+}
+.game {
+  display: none;
+}

@@ -1,0 +1,19 @@
+<body>
+    <section>
+        <img src="../../assets/tetris_logo.png" alt="tetris logo">
+        <div class="container">
+            <h1>Welcome Gamer!</h1>
+            <h2> \\ Get ready for a nostalgic experience //</h2>
+            <form>
+                <div><label for="name">Name:</label>
+                    <input id="name" [(ngModel)]="name" name="name" required>
+                </div>
+                <div><label for="email">Email:</label>
+                    <input id="email" [(ngModel)]="email" name="email" required email>
+                </div>
+                <button type="submit" (click)="startGame()">PLAY</button>
+            </form>
+            <h3>// Enter your details to begin \\</h3>
+        </div>
+    </section>
+</body>
