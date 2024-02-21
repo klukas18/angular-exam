@@ -91,11 +91,19 @@ form {
     transform: scale(1.1);
     animation: rgb2 10s linear infinite;
   }
-
+  button:disabled {
+    animation: none;
+    transform: none;
+    cursor: not-allowed;
+  }
   div {
     display: flex;
     flex-direction: column;
   }
+}
+
+.ng-touched.ng-invalid {
+  border: 1px solid red;
 }
 
 @keyframes rgb {

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  HostListener,
   ViewChild,
   Input,
   Output,
@@ -36,6 +37,31 @@ export class TetrisGameComponent {
   }
   onLineCleared() {
     this.lineCleared.emit();
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'a':
+      case 'A':
+        this.onLeftButtonPressed();
+        break;
+      case 'd':
+      case 'D':
+        this.onRightButtonPressed();
+        break;
+      case 's':
+      case 'S':
+        this.onDownButtonPressed();
+        break;
+      case ' ':
+        this.onRotateButtonPressed();
+        break;
+      case 'w':
+      case 'W':
+        this.onDropButtonPressed();
+        break;
+    }
   }
 
   @ViewChild(TetrisCoreComponent)

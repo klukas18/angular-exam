@@ -4,12 +4,14 @@
         <div class="container">
             <h1>Welcome Gamer!</h1>
             <h2> \\ Get ready for a nostalgic experience //</h2>
-            <form>
+            <form #form="ngForm">
                 <div><label for="name">Name:</label>
-                    <input id="name" [(ngModel)]="name" name="name" required>
+                    <input class="ng-untouched ng-pristine ng-invalid" type="text" id="name" [(ngModel)]="name"
+                        name="name" placeholder="e.g. H34D$h0T420">
                 </div>
                 <div><label for="email">Email:</label>
-                    <input id="email" [(ngModel)]="email" name="email" required email>
+                    <input class="ng-untouched ng-pristine ng-invalid" id="email" [(ngModel)]="email" name="email"
+                        placeholder="e.g. cutejessica69@onlyfans.com" email>
                 </div>
                 <button type="submit" (click)="startGame()">PLAY</button>
             </form>
