@@ -1,21 +1,71 @@
 <body>
-    <section>
-        <img src="../../assets/tetris_logo.png" alt="tetris logo">
-        <div class="container">
-            <h1>Welcome Gamer!</h1>
-            <h2> \\ Get ready for a nostalgic experience //</h2>
-            <form #form="ngForm">
-                <div><label for="name">Name:</label>
-                    <input class="ng-untouched ng-pristine ng-invalid" type="text" id="name" [(ngModel)]="name"
-                        name="name" placeholder="e.g. H34D$h0T420">
-                </div>
-                <div><label for="email">Email:</label>
-                    <input class="ng-untouched ng-pristine ng-invalid" id="email" [(ngModel)]="email" name="email"
-                        placeholder="e.g. cutejessica69@onlyfans.com" email>
-                </div>
-                <button type="submit" (click)="startGame()">PLAY</button>
-            </form>
-            <h3>// Enter your details to begin \\</h3>
+  <section>
+    <img src="../../assets/tetris_logo.png" alt="tetris logo" />
+    <div class="container">
+      <h1>Welcome Gamer!</h1>
+      <h2>\\ Get ready for a nostalgic experience //</h2>
+      <form #form="ngForm" (submit)="startGame(form.value)">
+        <!-- <div>
+          <label for="name">Name:</label>
+          <input
+            ngModel
+            #nameModel="ngModel"
+            type="text"
+            name="name"
+            id="name"
+            required
+            minlength="3"
+            class="ng-untouched ng-pristine ng-invalid"
+            placeholder="e.g. H34D$h0T420"
+          />
+          <div *ngIf="nameModel.errors?.minlength && nameModel.touched">
+            Name must be at least 3 characters long.
+          </div>
         </div>
-    </section>
+        <div>
+          <label for="email">Email:</label>
+          <input
+            ngModel
+            name="email"
+            id="email"
+            required
+            email
+            class="ng-untouched ng-pristine ng-invalid"
+            placeholder="e.g. cutejessica69@onlyfans.com"
+          />
+        </div>
+        <button [disabled]="form.invalid">PLAY</button> -->
+
+        <div>
+          <label for="name">Name:</label>
+          <input
+            ngModel
+            #nameModel="ngModel"
+            type="text"
+            name="name"
+            id="name"
+            required
+            minlength="1"
+            placeholder="e.g. H34D$h0T420"
+          />
+        </div>
+
+        <div>
+          <label for="email">Email:</label>
+          <input
+            ngModel
+            #emailModel="ngModel"
+            name="email"
+            id="email"
+            pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+            required
+            placeholder="e.g. cutejessica69@onlyfans.com"
+          />
+        </div>
+
+        <button [disabled]="form.invalid">PLAY</button>
+      </form>
+      <h3>// Enter your details to begin \\</h3>
+    </div>
+  </section>
 </body>

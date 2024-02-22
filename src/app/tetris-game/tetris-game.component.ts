@@ -7,16 +7,20 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { TetrisCoreComponent, TetrisCoreModule } from 'ngx-tetris';
 
 @Component({
   selector: 'app-tetris-game',
   standalone: true,
-  imports: [CommonModule, TetrisCoreModule],
+  imports: [CommonModule, FormsModule, TetrisCoreModule],
   templateUrl: './tetris-game.component.html',
   styleUrl: './tetris-game.component.scss',
 })
 export class TetrisGameComponent {
+  @Input() name: string = '';
+  @Input() email: string = '';
+
   @Input() tileSize: any = '25px';
   @Input() initialSpeed: number = 500;
   @Input() start: boolean = false;
@@ -32,11 +36,28 @@ export class TetrisGameComponent {
   @Output() lineCleared = new EventEmitter<void>();
   @Output() gameOver = new EventEmitter();
 
+  clearedLinesCount: number = 0;
+  gameStatus: string = 'READY';
+  gameStartTime!: number;
+  gameEndTime!: number;
+  timePassed: number = 0;
+
   endGame() {
     this.gameEnded.emit();
+    this.gameStatus = 'ENDED';
+    this.gameEndTime = Date.now();
+    this.timePassed += this.gameEndTime - this.gameStartTime;
   }
+
+  getTimeSpent()  {
+    const minutes = Math.floor(this.timePassed / 60000);
+    const seconds = ((this.timePassed % 60000) / 1000).toFixed(0);
+    return `${minutes} : ${seconds}`;
+  }
+
   onLineCleared() {
     this.lineCleared.emit();
+    this.clearedLinesCount++;
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -69,14 +90,22 @@ export class TetrisGameComponent {
 
   public onStartButtonPressed() {
     this._tetris.actionStart();
+    this.gameStatus = 'PLAYING';
+    this.gameStartTime = Date.now();
   }
 
   public onStopButtonPressed() {
     this._tetris.actionStop();
+    this.gameStatus = 'PAUSED';
+    this.gameEndTime = Date.now();
+    this.timePassed += this.gameEndTime - this.gameStartTime;
   }
 
   public onResetButtonPressed() {
     this._tetris.actionReset();
+    this.gameStatus = 'READY';
+    this.gameEndTime = Date.now();
+    this.timePassed = 0;
   }
 
   public onLeftButtonPressed() {

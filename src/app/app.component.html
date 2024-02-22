@@ -3,6 +3,6 @@
         <app-intro-page (gameStarted)="handleGameStarted()"></app-intro-page>
     </section>
     <section class="game" [style.display]="showGame ? 'block' : 'none'">
-        <app-tetris-game (gameEnded)="handleGameEnded()"></app-tetris-game>
+        <app-tetris-game [name]="name" (gameEnded)="handleGameEnded()"></app-tetris-game>
     </section>
 </body>

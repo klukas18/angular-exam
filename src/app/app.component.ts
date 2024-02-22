@@ -13,6 +13,8 @@ import { IntroPageComponent } from './intro-page/intro-page.component';
 export class AppComponent {
   title = 'tetris-app';
 
+  name: string = '';
+
   showIntro = true;
   showGame = false;
 

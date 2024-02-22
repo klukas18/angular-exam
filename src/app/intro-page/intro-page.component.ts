@@ -9,12 +9,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './intro-page.component.scss',
 })
 export class IntroPageComponent {
-  name = '';
-  email = '';
+  @Output() gameStarted = new EventEmitter<{
+    name: string;
+    email: string;
+  }>();
 
-  @Output() gameStarted = new EventEmitter<void>();
-
-  startGame() {
-    this.gameStarted.emit();
+  startGame(data: { name: string; email: string }) {
+    this.gameStarted.emit(data);
   }
 }
