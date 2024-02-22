@@ -5,37 +5,6 @@
       <h1>Welcome Gamer!</h1>
       <h2>\\ Get ready for a nostalgic experience //</h2>
       <form #form="ngForm" (submit)="startGame(form.value)">
-        <!-- <div>
-          <label for="name">Name:</label>
-          <input
-            ngModel
-            #nameModel="ngModel"
-            type="text"
-            name="name"
-            id="name"
-            required
-            minlength="3"
-            class="ng-untouched ng-pristine ng-invalid"
-            placeholder="e.g. H34D$h0T420"
-          />
-          <div *ngIf="nameModel.errors?.minlength && nameModel.touched">
-            Name must be at least 3 characters long.
-          </div>
-        </div>
-        <div>
-          <label for="email">Email:</label>
-          <input
-            ngModel
-            name="email"
-            id="email"
-            required
-            email
-            class="ng-untouched ng-pristine ng-invalid"
-            placeholder="e.g. cutejessica69@onlyfans.com"
-          />
-        </div>
-        <button [disabled]="form.invalid">PLAY</button> -->
-
         <div>
           <label for="name">Name:</label>
           <input

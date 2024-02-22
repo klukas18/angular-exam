@@ -14,10 +14,35 @@
         <button class="btn5" (click)="onRotateButtonPressed()">
           Rotate[Spacebar]
         </button>
-        <button class="btn6" (click)="onStartButtonPressed()">Start</button>
-        <button class="btn7" (click)="onStopButtonPressed()">Stop</button>
-        <button class="btn8" (click)="onResetButtonPressed()">Reset</button>
-        <button class="btn9" type="button" (click)="endGame()">End Game</button>
+        <button
+          class="btn6"
+          (click)="onStartButtonPressed()"
+          (keydown.space)="$event.preventDefault()"
+        >
+          Start
+        </button>
+        <button
+          class="btn7"
+          (click)="onStopButtonPressed()"
+          (keydown.space)="$event.preventDefault()"
+        >
+          Stop
+        </button>
+        <button
+          class="btn8"
+          (click)="onResetButtonPressed()"
+          (keydown.space)="$event.preventDefault()"
+        >
+          Reset
+        </button>
+        <button
+          class="btn9"
+          type="button"
+          (click)="endGame()"
+          (keydown.space)="$event.preventDefault()"
+        >
+          End Game
+        </button>
       </div>
       <h2>Console</h2>
       <div class="lists">

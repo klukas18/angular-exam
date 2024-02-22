@@ -18,7 +18,8 @@ export class AppComponent {
   showIntro = true;
   showGame = false;
 
-  handleGameStarted() {
+  handleGameStarted(data: { name: string; email: string }) {
+    this.name = data.name;
     this.showIntro = false;
     this.showGame = true;
   }

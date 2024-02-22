@@ -41,18 +41,20 @@ export class TetrisGameComponent {
   gameStartTime!: number;
   gameEndTime!: number;
   timePassed: number = 0;
+  timerId: any;
+  isTimerRunning: boolean = false;
 
   endGame() {
     this.gameEnded.emit();
     this.gameStatus = 'ENDED';
-    this.gameEndTime = Date.now();
-    this.timePassed += this.gameEndTime - this.gameStartTime;
+    clearInterval(this.timerId);
+    this.isTimerRunning = false;
   }
 
-  getTimeSpent()  {
+  getTimeSpent() {
     const minutes = Math.floor(this.timePassed / 60000);
     const seconds = ((this.timePassed % 60000) / 1000).toFixed(0);
-    return `${minutes} : ${seconds}`;
+    return `${minutes}:${seconds}`;
   }
 
   onLineCleared() {
@@ -89,16 +91,25 @@ export class TetrisGameComponent {
   private _tetris!: TetrisCoreComponent;
 
   public onStartButtonPressed() {
-    this._tetris.actionStart();
-    this.gameStatus = 'PLAYING';
-    this.gameStartTime = Date.now();
+    if (!this.isTimerRunning) {
+      this._tetris.actionStart();
+      this.gameStatus = 'PLAYING';
+      this.gameStartTime = Date.now();
+      this.timerId = setInterval(() => {
+        this.timePassed += 1000;
+      }, 1000);
+      this.isTimerRunning = true;
+    } else if (this.gameStatus === 'PAUSED') {
+      this._tetris.actionStart();
+      this.gameStatus = 'PLAYING';
+    }
   }
 
   public onStopButtonPressed() {
     this._tetris.actionStop();
     this.gameStatus = 'PAUSED';
-    this.gameEndTime = Date.now();
-    this.timePassed += this.gameEndTime - this.gameStartTime;
+    clearInterval(this.timerId);
+    this.isTimerRunning = false;
   }
 
   public onResetButtonPressed() {
@@ -106,6 +117,7 @@ export class TetrisGameComponent {
     this.gameStatus = 'READY';
     this.gameEndTime = Date.now();
     this.timePassed = 0;
+    this.isTimerRunning = false;
   }
 
   public onLeftButtonPressed() {

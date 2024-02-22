@@ -48,6 +48,7 @@ section {
   }
 }
 .container {
+  box-sizing: border-box;
   width: 50%;
   border: 2px solid;
   animation: rgb 5s linear infinite;
@@ -104,7 +105,7 @@ form {
 
 .ng-touched.ng-invalid {
   input {
-    border: 1px solid red;
+    outline: 1px solid red;
   }
 }
 
