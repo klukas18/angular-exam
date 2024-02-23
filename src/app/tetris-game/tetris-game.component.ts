@@ -81,7 +81,6 @@ export class TetrisGameComponent {
     this.start = false;
     this.gameEnded.emit();
     this.gameStatus = 'READY';
-    // this.addEventToHistory('gameEnded');
     clearInterval(this.timerId);
     this.isTimerRunning = false;
   }
@@ -163,13 +162,16 @@ export class TetrisGameComponent {
   }
 
   public onResetButtonPressed() {
+    if (this.gameStatus === 'PLAYING') {
+      this.onStopButtonPressed();
+    }
     this._tetris.actionReset();
     this.gameStatus = 'READY';
     this.gameEndTime = Date.now();
-    this.timePassed = 0;
-    this.isTimerRunning = false;
     this.gameplayHistory = [];
     this.clearedLinesCount = 0;
+    this.timePassed = 0;
+    this.isTimerRunning = false;
   }
 
   public onLeftButtonPressed() {

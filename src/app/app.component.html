@@ -1,12 +1,11 @@
 <body>
-  <section class="intro" [style.display]="showIntro ? 'block' : 'none'">
+  <section [style.display]="showIntro ? 'block' : 'none'">
     <app-intro-page
       *ngIf="showIntro"
       (gameStarted)="handleGameStarted($event)"
     ></app-intro-page>
   </section>
-  -->
-  <section class="game" [style.display]="showGame ? 'block' : 'none'">
+  <section [style.display]="showGame ? 'block' : 'none'">
     <app-tetris-game
       *ngIf="showGame"
       [name]="name"

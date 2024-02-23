@@ -106,10 +106,11 @@ form {
     flex-direction: column;
   }
 }
-
-.ng-touched.ng-invalid {
-  input {
-    outline: 1px solid red;
+input {
+  &.ng-touched {
+    &.ng-invalid {
+      outline: 1px solid red;
+    }
   }
 }
 

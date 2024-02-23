@@ -9,7 +9,6 @@
           <label for="name">Name:</label>
           <input
             ngModel
-            #nameModel="ngModel"
             type="text"
             name="name"
             id="name"
@@ -18,12 +17,10 @@
             placeholder="e.g. H34D$h0T420"
           />
         </div>
-
         <div>
           <label for="email">Email:</label>
           <input
             ngModel
-            #emailModel="ngModel"
             name="email"
             id="email"
             pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
@@ -31,7 +28,6 @@
             placeholder="e.g. cutejessica69@onlyfans.com"
           />
         </div>
-
         <button [disabled]="form.invalid">PLAY</button>
       </form>
       <h3>// Enter your details to begin \\</h3>
