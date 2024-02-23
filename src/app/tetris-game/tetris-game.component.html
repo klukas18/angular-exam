@@ -1,7 +1,11 @@
 <body>
   <section>
     <div class="board">
-      <tetris-core #game (lineCleared)="onLineCleared()"></tetris-core>
+      <tetris-core
+        #game
+        (gameOver)="gameLost()"
+        (lineCleared)="onLineCleared()"
+      ></tetris-core>
     </div>
 
     <div class="interface">
@@ -46,12 +50,56 @@
       </div>
       <h2>Console</h2>
       <div class="lists">
-        <div class="cleared-lines">
+        <div class="game-info">
           <h2>Hello, {{ name }}</h2>
           <br />
+          <br />
           <h2>SCORE: {{ clearedLinesCount }}</h2>
-          <h2>STATUS: {{ gameStatus }}</h2>
+          <h2
+            [ngStyle]="{
+              color:
+                gameStatus === 'READY'
+                  ? '#62e659'
+                  : gameStatus === 'PLAYING'
+                  ? '#59b9e6'
+                  : gameStatus === 'PAUSED'
+                  ? '#dae659'
+                  : gameStatus === 'LOST'
+                  ? '#e65959'
+                  : 'white'
+            }"
+          >
+            STATUS: {{ gameStatus }}
+          </h2>
           <h2>TIMER: {{ getTimeSpent() }}</h2>
+        </div>
+        <div class="game-history">
+          <div>
+            <label for="filter">EVENT:</label>
+            <select id="filter" [(ngModel)]="filterCriteria">
+              <option value="">All</option>
+              <option
+                *ngFor="let actionType of getUniqueActionTypes()"
+                [value]="actionType"
+              >
+                {{ actionType }}
+              </option>
+            </select>
+          </div>
+
+          <div>
+            <label for="sort">TIMESTAMP:</label>
+            <select id="sort" [(ngModel)]="sortOrder">
+              <option value="asc">Oldest</option>
+              <option value="desc">Newest</option>
+            </select>
+          </div>
+
+          <div *ngFor="let event of getSortedAndFilteredHistory()">
+            <p>
+              {{ event.type }}: {{ event.timestamp | date : "short" }} &nbsp;
+            </p>
+          </div>
         </div>
       </div>
     </div>

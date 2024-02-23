@@ -9,6 +9,8 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TetrisCoreComponent, TetrisCoreModule } from 'ngx-tetris';
+import { EventFilterPipe } from '../event-filter.pipe';
+import { TimestampSortPipe } from '../timestamp-sort.pipe';
 
 @Component({
   selector: 'app-tetris-game',
@@ -43,10 +45,44 @@ export class TetrisGameComponent {
   timePassed: number = 0;
   timerId: any;
   isTimerRunning: boolean = false;
+  gameplayHistory: { type: string; timestamp: number }[] = [];
+  sortOrder: 'asc' | 'desc' = 'asc';
+  filterCriteria: string = '';
+
+  getUniqueActionTypes(): string[] {
+    return [...new Set(this.gameplayHistory.map((event) => event.type))];
+  }
+
+  getSortedHistory(): { type: string; timestamp: number }[] {
+    return this.gameplayHistory.sort((a, b) => {
+      if (this.sortOrder === 'asc') {
+        return a.timestamp - b.timestamp;
+      } else {
+        return b.timestamp - a.timestamp;
+      }
+    });
+  }
+
+  getFilteredHistory(): { type: string; timestamp: number }[] {
+    return this.gameplayHistory.filter((event) =>
+      event.type.includes(this.filterCriteria)
+    );
+  }
+
+  getSortedAndFilteredHistory(): { type: string; timestamp: number }[] {
+    return this.getFilteredHistory().sort((a, b) => {
+      if (this.sortOrder === 'asc') {
+        return a.timestamp - b.timestamp;
+      } else {
+        return b.timestamp - a.timestamp;
+      }
+    });
+  }
 
   endGame() {
     this.gameEnded.emit();
     this.gameStatus = 'ENDED';
+    this.addEventToHistory('gameEnded');
     clearInterval(this.timerId);
     this.isTimerRunning = false;
   }
@@ -60,6 +96,15 @@ export class TetrisGameComponent {
   onLineCleared() {
     this.lineCleared.emit();
     this.clearedLinesCount++;
+    this.addEventToHistory('lineCleared');
+  }
+
+  gameLost() {
+    this.gameOver.emit();
+    this.gameStatus = 'LOST';
+    this.addEventToHistory('gameLost');
+    clearInterval(this.timerId);
+    this.isTimerRunning = false;
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -95,6 +140,7 @@ export class TetrisGameComponent {
       this._tetris.actionStart();
       this.gameStatus = 'PLAYING';
       this.gameStartTime = Date.now();
+      this.addEventToHistory('gameStarted');
       this.timerId = setInterval(() => {
         this.timePassed += 1000;
       }, 1000);
@@ -105,9 +151,14 @@ export class TetrisGameComponent {
     }
   }
 
+  addEventToHistory(type: string) {
+    this.gameplayHistory.push({ type, timestamp: Date.now() });
+  }
+
   public onStopButtonPressed() {
     this._tetris.actionStop();
     this.gameStatus = 'PAUSED';
+    this.addEventToHistory('gamePaused');
     clearInterval(this.timerId);
     this.isTimerRunning = false;
   }
