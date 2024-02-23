@@ -130,7 +130,6 @@ h2 {
 
 .lists {
   width: 90%;
-  flex-wrap: no-wrap;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -147,17 +146,29 @@ h2 {
     font-size: 1.5rem;
     margin-bottom: 10px;
     text-align: left;
-  
   }
 }
 .game-info {
-  font-family: "Public Pixel", sans-serif;
-  font-size: 10px;
-  text-align: center;
+  width: 55%;
 }
 .game-history {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 45%;
   max-height: 200px; /* Adjust this value as needed */
   overflow-y: auto;
+  margin: 0px auto;
+  font-family: monospace;
+  select {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.65);
+    color: white;
+  }
 }
 
 .game-history::-webkit-scrollbar {

@@ -51,29 +51,39 @@
       <h2>Console</h2>
       <div class="lists">
         <div class="game-info">
-          <h2>Hello, {{ name }}</h2>
-          <br />
-          <br />
-          <h2>SCORE: {{ clearedLinesCount }}</h2>
-          <h2
-            [ngStyle]="{
-              color:
-                gameStatus === 'READY'
-                  ? '#62e659'
-                  : gameStatus === 'PLAYING'
-                  ? '#59b9e6'
-                  : gameStatus === 'PAUSED'
-                  ? '#dae659'
-                  : gameStatus === 'LOST'
-                  ? '#e65959'
-                  : 'white'
-            }"
-          >
-            STATUS: {{ gameStatus }}
+          <h2>
+            Hello, <span style="color: #59b9e6">{{ name }}.</span>
           </h2>
-          <h2>TIMER: {{ getTimeSpent() }}</h2>
+          <br />
+          <br />
+          <h2>
+            SCORE: <span style="color: #bebebe">{{ clearedLinesCount }}</span>
+          </h2>
+          <h2 style="color: white">
+            STATUS:
+            <span
+              [ngStyle]="{
+                color:
+                  gameStatus === 'READY'
+                    ? '#62e659'
+                    : gameStatus === 'PLAYING'
+                    ? '#59b9e6'
+                    : gameStatus === 'PAUSED'
+                    ? '#dae659'
+                    : gameStatus === 'LOST'
+                    ? '#e65959'
+                    : 'white'
+              }"
+              >{{ gameStatus }}</span
+            >
+          </h2>
+          <h2>
+            TIMER: <span style="color: #bebebe">{{ getTimeSpent() }}</span>
+          </h2>
         </div>
+
         <div class="game-history">
+          <h2>Game History</h2>
           <div>
             <label for="filter">EVENT:</label>
             <select id="filter" [(ngModel)]="filterCriteria">
@@ -88,7 +98,7 @@
           </div>
 
           <div>
-            <label for="sort">TIMESTAMP:</label>
+            <label for="sort">RECORD:</label>
             <select id="sort" [(ngModel)]="sortOrder">
               <option value="asc">Oldest</option>
               <option value="desc">Newest</option>
