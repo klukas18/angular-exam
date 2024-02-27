@@ -8,12 +8,22 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Subject, Observable } from 'rxjs';
+import { map, scan } from 'rxjs/operators';
 import { TetrisCoreComponent, TetrisCoreModule } from 'ngx-tetris';
+import { FilteredHistoryPipe } from '../filtered-history.pipe';
+import { SortedAndFilteredHistoryPipe } from '../sorted-and-filtered-history.pipe';
 
 @Component({
   selector: 'app-tetris-game',
   standalone: true,
-  imports: [CommonModule, FormsModule, TetrisCoreModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TetrisCoreModule,
+    FilteredHistoryPipe,
+    SortedAndFilteredHistoryPipe,
+  ],
   templateUrl: './tetris-game.component.html',
   styleUrl: './tetris-game.component.scss',
 })
@@ -43,38 +53,28 @@ export class TetrisGameComponent {
   timePassed: number = 0;
   timerId: any;
   isTimerRunning: boolean = false;
-  gameplayHistory: { type: string; timestamp: number }[] = [];
+
+  private clearHistoryMarker = { type: '', timestamp: -1 };
+  private gameplayHistorySubject = new Subject<
+    | { type: string; timestamp: number }
+    | typeof TetrisGameComponent.prototype.clearHistoryMarker
+  >();
+  gameplayHistory$: Observable<{ type: string; timestamp: number }[]> =
+    this.gameplayHistorySubject.pipe(
+      scan(
+        (history: { type: string; timestamp: number }[], event) =>
+          event === this.clearHistoryMarker ? [] : [...history, event],
+        []
+      )
+    );
+  uniqueActionTypes$: Observable<string[]> = this.gameplayHistory$.pipe(
+    map((events) => [...new Set(events.map((event) => event.type))])
+  );
   sortOrder: 'asc' | 'desc' = 'asc';
   filterCriteria: string = '';
 
-  getUniqueActionTypes(): string[] {
-    return [...new Set(this.gameplayHistory.map((event) => event.type))];
-  }
-
-  getSortedHistory(): { type: string; timestamp: number }[] {
-    return this.gameplayHistory.sort((a, b) => {
-      if (this.sortOrder === 'asc') {
-        return a.timestamp - b.timestamp;
-      } else {
-        return b.timestamp - a.timestamp;
-      }
-    });
-  }
-
-  getFilteredHistory(): { type: string; timestamp: number }[] {
-    return this.gameplayHistory.filter((event) =>
-      event.type.includes(this.filterCriteria)
-    );
-  }
-
-  getSortedAndFilteredHistory(): { type: string; timestamp: number }[] {
-    return this.getFilteredHistory().sort((a, b) => {
-      if (this.sortOrder === 'asc') {
-        return a.timestamp - b.timestamp;
-      } else {
-        return b.timestamp - a.timestamp;
-      }
-    });
+  getUniqueActionTypes(): Observable<string[]> {
+    return this.uniqueActionTypes$;
   }
 
   endGame() {
@@ -105,8 +105,12 @@ export class TetrisGameComponent {
     this.isTimerRunning = false;
   }
 
+  clearHistory() {
+    this.gameplayHistorySubject.next(this.clearHistoryMarker);
+  }
+
   addEventToHistory(type: string) {
-    this.gameplayHistory.push({ type, timestamp: Date.now() });
+    this.gameplayHistorySubject.next({ type, timestamp: Date.now() });
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -168,7 +172,7 @@ export class TetrisGameComponent {
     this._tetris.actionReset();
     this.gameStatus = 'READY';
     this.gameEndTime = Date.now();
-    this.gameplayHistory = [];
+    this.clearHistory();
     this.clearedLinesCount = 0;
     this.timePassed = 0;
     this.isTimerRunning = false;

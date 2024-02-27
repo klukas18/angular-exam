@@ -89,7 +89,7 @@
             <select id="filter" [(ngModel)]="filterCriteria">
               <option value="">All</option>
               <option
-                *ngFor="let actionType of getUniqueActionTypes()"
+                *ngFor="let actionType of uniqueActionTypes$ | async"
                 [value]="actionType"
               >
                 {{ actionType }}
@@ -105,7 +105,13 @@
             </select>
           </div>
 
-          <div *ngFor="let event of getSortedAndFilteredHistory()">
+          <div
+            *ngFor="
+              let event of gameplayHistory$
+                | async
+                | sortedAndFilteredHistory : sortOrder : filterCriteria
+            "
+          >
             <p>
               {{ event.type }}: {{ event.timestamp | date : "short" }} &nbsp;
             </p>
