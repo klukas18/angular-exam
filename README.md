@@ -1,27 +1,15 @@
 # TetrisApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.0.
+The game is deployed with GH Pages. You can try it here:
+<br>
+https://klukas18.github.io/angular-exam/
 
-## Development server
+Technologies:
+<br>
+<br>
+[![My Skills](https://skillicons.dev/icons?i=html,css,ts,angular)](https://skillicons.dev)
+<br>
+<br>
+Game core provided by: https://github.com/chrum/ngx-tetris
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![Screenshot_3](https://github.com/klukas18/angular-exam/assets/134596428/657f61a4-83d8-4f57-8c96-4dfec3a9582f)
