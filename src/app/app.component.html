@@ -1,4 +1,4 @@
-<body>
+<!-- <body>
   <section [style.display]="showIntro ? 'block' : 'none'">
     <app-intro-page
       *ngIf="showIntro"
@@ -12,4 +12,9 @@
       (gameEnded)="handleGameEnded()"
     ></app-tetris-game>
   </section>
-</body>
+</body> -->
+
+<router-outlet></router-outlet>
+<div class="buttonContainer" *ngIf="isIntroRoute()">
+  <button (click)="openGame()">PLAY</button>
+</div>

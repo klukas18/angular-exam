@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import {
   Component,
   HostListener,
@@ -6,6 +6,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
@@ -27,7 +28,23 @@ import { SortedAndFilteredHistoryPipe } from '../sorted-and-filtered-history.pip
   templateUrl: './tetris-game.component.html',
   styleUrl: './tetris-game.component.scss',
 })
-export class TetrisGameComponent {
+export class TetrisGameComponent implements OnInit {
+  constructor(private _location: Location) {}
+
+  ngOnInit(): void {}
+
+  endGame() {
+    this.start = false;
+    this.gameEnded.emit();
+    this.gameStatus = 'READY';
+    clearInterval(this.timerId);
+    this.isTimerRunning = false;
+  }
+
+  goBack() {
+    this._location.back();
+  }
+
   @Input() name: string = '';
   @Input() email: string = '';
 
@@ -75,14 +92,6 @@ export class TetrisGameComponent {
 
   getUniqueActionTypes(): Observable<string[]> {
     return this.uniqueActionTypes$;
-  }
-
-  endGame() {
-    this.start = false;
-    this.gameEnded.emit();
-    this.gameStatus = 'READY';
-    clearInterval(this.timerId);
-    this.isTimerRunning = false;
   }
 
   getTimeSpent() {
