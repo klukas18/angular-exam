@@ -11,7 +11,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
 import { map, scan } from 'rxjs/operators';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TetrisCoreComponent, TetrisCoreModule } from 'ngx-tetris';
 import { FilteredHistoryPipe } from '../filtered-history.pipe';
 import { SortedAndFilteredHistoryPipe } from '../sorted-and-filtered-history.pipe';
@@ -34,49 +33,42 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrl: './tetris-game.component.scss',
 })
 export class TetrisGameComponent implements OnInit {
-  playerName: string = '';
-  token: string = '';
-  colorPalette: string = 'normal';
-
+  playerData: { name?: string; token?: string; colorPalette?: string } = {};
   highscores: { name: string; score: number }[] = [];
+  // myScores: { name: string; score: number }[] = [];
   constructor(
     private _location: Location,
     private playerDataService: PlayerDataService,
-    private tokenAuthService: TokenAuthService,
     private highscoresService: HighscoresService,
-    private route: ActivatedRoute,
     private http: HttpClient
   ) {}
 
   ngOnInit() {
-    this.loadHighscores();
-    setInterval(() => {
-      this.loadHighscores();
-    }, 30000);
-
-    this.route.paramMap.subscribe((params) => {
-      const colorsParam = params.get('colors');
-      this.colorPalette = colorsParam ? colorsParam : 'normal';
-      const routePlayerName = params.get('playerName');
-      if (routePlayerName) {
-        this.playerName = routePlayerName;
-        localStorage.setItem('playerName', this.playerName);
-      } else {
-        this.playerName =
-          localStorage.getItem('playerName') ||
-          this.playerDataService.getPlayerName();
-      }
-
-      const routeToken = params.get('token');
-      if (routeToken) {
-        this.token = routeToken;
-        localStorage.setItem('token', this.token);
-      } else {
-        this.token =
-          localStorage.getItem('token') || this.playerDataService.getToken();
+    this.playerDataService.currentData.subscribe((data) => {
+      if (data) {
+        this.playerData = {
+          name: data.name,
+          token: data.token,
+          colorPalette: data.colorPalette,
+        };
+        // Use the data for the game setup
+        console.log(data);
       }
     });
   }
+
+  // gameFinished(score: number): void {
+  //   const headers = new HttpHeaders().set('auth-token', this.playerData.token);
+
+  //   this.http.post('/scores', { name: this.playerData.name, score }, { headers }).subscribe(
+  //     (response) => {
+  //       // handle successful submission
+  //     },
+  //     (error) => {
+  //       // handle failed submission
+  //     }
+  //   );
+  // }
 
   loadHighscores(): void {
     this.highscoresService.load().subscribe(
@@ -89,9 +81,11 @@ export class TetrisGameComponent implements OnInit {
     );
   }
 
-  get currentUserScores() {
-    return this.highscores.filter((score) => score.name === this.playerName);
-  }
+  // loadMyScores(): void {
+  //   if (this.playerData) {
+  //     this.myScores = this.highscores.filter(score => score.name === this.playerData.name);
+  //   }
+  // }
 
   sortHighscoresAsc() {
     this.highscores.sort((a, b) => a.score - b.score);
@@ -135,7 +129,6 @@ export class TetrisGameComponent implements OnInit {
   timePassed: number = 0;
   timerId: any;
   isTimerRunning: boolean = false;
-  playerScore = this.clearedLinesCount;
 
   private clearHistoryMarker = { type: '', timestamp: -1 };
   private gameplayHistorySubject = new Subject<
@@ -178,18 +171,6 @@ export class TetrisGameComponent implements OnInit {
     this.addEventToHistory('GameLost');
     clearInterval(this.timerId);
     this.isTimerRunning = false;
-
-    if (window.confirm('Do you want to send your score?')) {
-      this.highscoresService
-        .postMyScores(this.token, this.playerName, this.clearedLinesCount) // Adjusted to include the authToken
-        .subscribe({
-          next: (response) => {
-            console.log('Score posted successfully', response);
-            this.loadHighscores();
-          },
-          error: (error) => console.error('Error posting score', error),
-        });
-    }
   }
 
   clearHistory() {

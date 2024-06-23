@@ -4,31 +4,43 @@
     <div class="container">
       <h1>Welcome Gamer!</h1>
       <h2>\\ Get ready for a nostalgic experience //</h2>
-      <form #form="ngForm" (submit)="startGame(form.value)">
+      <form [formGroup]="playerForm" (submit)="setPlayerData()">
         <div>
           <label for="name">Name:</label>
           <input
-            ngModel
+            formControlName="playerName"
             type="text"
-            name="name"
-            id="name"
-            required
-            minlength="1"
+            class="form-control"
             placeholder="e.g. H34D$h0T420"
           />
+          <div *ngIf="isPlayerNameInvalid()">
+            Enter a valid name - min. 5 characters.
+          </div>
+          <br />
         </div>
         <div>
-          <label for="email">Email:</label>
+          <label for="token">StudentID:</label>
           <input
-            ngModel
-            name="email"
-            id="email"
-            pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
-            required
-            placeholder="e.g. cutejessica69@onlyfans.com"
+            formControlName="studentID"
+            type="text"
+            class="form-control"
+            placeholder="Enter ID."
           />
+          <div *ngIf="isStudentIDInvalid()">
+            This field is required. Enter 4-digit ID.
+          </div>
+          <br />
         </div>
-        <!-- <button [disabled]="form.invalid">PLAY</button> -->
+        <div>
+          <label for="colorPalette">Color Palette:</label>
+          <select formControlName="colorPalette" type="text">
+            <option value="normal">Normal</option>
+            <option value="bw">Black/White</option>
+          </select>
+        </div>
+        <div class="buttonContainer">
+          <button type="submit" [disabled]="playerForm.invalid">PLAY</button>
+        </div>
       </form>
       <h3>// Enter your details to begin \\</h3>
     </div>

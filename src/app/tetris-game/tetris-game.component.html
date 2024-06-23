@@ -3,6 +3,7 @@
     <div class="board">
       <tetris-core
         #game
+        [ngClass]=""
         (gameOver)="gameLost()"
         (lineCleared)="onLineCleared()"
       ></tetris-core>
@@ -53,7 +54,7 @@
       <div class="lists">
         <div class="game-info">
           <h2>
-            Hello, <span style="color: #59b9e6">{{ name }}.</span>
+            Hello, <span style="color: #59b9e6">{{ playerName }}.</span>
           </h2>
           <br />
           <br />
@@ -120,5 +121,25 @@
         </div>
       </div>
     </div>
+    <div>
+      <div class="highscores">
+        <h3>Top 10 Highscores</h3>
+        <button (click)="sortHighscoresAsc()">Sort Asc.</button>
+        <button (click)="sortHighscoresDesc()">Sort Desc.</button>
+        <div *ngFor="let score of highscores | slice : 0 : 10">
+          {{ score.name }}: {{ score.score }}
+        </div>
+      </div>
+      <br /><br /><br />
+      <div class="myScores">
+        <h3>My Scores</h3>
+        <ul *ngIf="currentUserScores.length > 0">
+          <li *ngFor="let score of currentUserScores">{{ score.score }}</li>
+        </ul>
+        <p *ngIf="currentUserScores.length === 0">No scores to display.</p>
+      </div>
+    </div>
+
+    <div></div>
   </section>
 </body>
