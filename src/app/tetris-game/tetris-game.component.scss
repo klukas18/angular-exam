@@ -147,6 +147,8 @@ h2 {
     margin-bottom: 10px;
     text-align: left;
   }
+
+  
 }
 .game-info {
   width: 55%;
@@ -189,37 +191,69 @@ h2 {
 
 .highscores {
   width: 200px;
+  height: 350px;
+  border: 1px solid black;
+  overflow: auto;
+  margin: 0 25px;
+  padding: 25px;
+  border: 1px solid;
+  animation: rgb 5s linear infinite;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.65);
+  font-family: "LCD Phone", sans-serif;
+  font-size: 0.8rem;
+
+  h3 {
+    font-family: "Back to 1982", sans-serif;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  
+  button {
+    width: 35%;
+    padding: 5px;
+    margin: 10px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #8d8d8d;
+    color: white;
+    font-family: "Public Pixel", sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+  
+  }
+}
+
+.myScores {
+  width: 200px;
   height: 200px;
   border: 1px solid black;
   overflow: auto;
+  margin: 0 25px;
+  padding: 25px;
+  border: 1px solid;
+  animation: rgb 5s linear infinite;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.65);
+  font-family: "LCD Phone", sans-serif;
+  font-size: 0.8rem;
+  h3 {
+    font-family: "Back to 1982", sans-serif;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
 }
 // tetris-core {
 //   tile {
 //     background: white;
 //     &.color-box {
-//       background: #000000;
+//       background: #000;
 //     }
 //   }
 // }
-
-// .black-and-white {
-//   tetris-core {
-//     tile {
-//       background: white;
-//       &.color-box {
-//         background: #000;
-//       }
-//     }
-//   }
-// }
-tetris-core {
-  tile {
-    background: white;
-    &.color-box {
-      background: #000;
-    }
-  }
-}
 
 @keyframes rgb {
   0% {

@@ -36,7 +36,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class TetrisGameComponent implements OnInit {
   playerName: string = '';
   token: string = '';
-  colorPalette: string = 'normal';
+  selectedColor: string = 'normal';
 
   highscores: { name: string; score: number }[] = [];
   constructor(
@@ -56,7 +56,7 @@ export class TetrisGameComponent implements OnInit {
 
     this.route.paramMap.subscribe((params) => {
       const colorsParam = params.get('colors');
-      this.colorPalette = colorsParam ? colorsParam : 'normal';
+      this.selectedColor = colorsParam ? colorsParam : 'normal';
       const routePlayerName = params.get('playerName');
       if (routePlayerName) {
         this.playerName = routePlayerName;
@@ -179,9 +179,9 @@ export class TetrisGameComponent implements OnInit {
     clearInterval(this.timerId);
     this.isTimerRunning = false;
 
-    if (window.confirm('Do you want to send your score?')) {
+    if (window.confirm('Do you want to send your score to the leaderboard?')) {
       this.highscoresService
-        .postMyScores(this.token, this.playerName, this.clearedLinesCount) // Adjusted to include the authToken
+        .postMyScores(this.token, this.playerName, this.clearedLinesCount)
         .subscribe({
           next: (response) => {
             console.log('Score posted successfully', response);

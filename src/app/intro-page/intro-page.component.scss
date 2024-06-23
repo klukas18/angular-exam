@@ -66,8 +66,8 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 20px;
-  padding: 20px;
+  margin: 10px;
+  padding: 10px;
 
   input {
     width: 400px;
@@ -113,7 +113,40 @@ input {
     }
   }
 }
+.colorInput {
+  gap: 5px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Slightly visible border */
+  border-radius: 8px; /* Rounded corners */
+  color: white; /* Light text color for contrast */
 
+  label {
+    color: rgba(255, 255, 255, 0.85); /* Light label color with transparency */
+  }
+
+  select {
+    background-color: rgba(0, 0, 0, 0.5); /* Darker and semi-transparent background for select */
+    color: white; /* Light text color for contrast */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Visible border with transparency */
+    -webkit-appearance: none; /* Removes default styling for WebKit browsers */
+    -moz-appearance: none; /* Removes default styling for Mozilla browsers */
+    appearance: none; /* Removes default styling to apply custom styles */
+    padding: 8px;
+    border-radius: 4px; /* Rounded corners for select */
+    &:focus {
+      outline: none;
+      border-color: #007bff; /* Highlight color on focus */
+    }
+  }
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @keyframes rgb {
   0% {
     border-color: rgb(255, 0, 0);

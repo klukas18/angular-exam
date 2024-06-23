@@ -10,6 +10,7 @@
           <input
             formControlName="playerName"
             type="text"
+            id="name"
             class="form-control"
             placeholder="e.g. H34D$h0T420"
           />
@@ -19,23 +20,28 @@
           <br />
         </div>
         <div>
-          <label for="token">StudentID:</label>
+          <label for="studentID">Student ID:</label>
           <input
             formControlName="studentID"
             type="text"
+            id="studentID"
             class="form-control"
-            placeholder="Enter ID."
+            placeholder="Enter ID"
           />
           <div *ngIf="isStudentIDInvalid()">
             This field is required. Enter 4-digit ID.
           </div>
           <br />
         </div>
-        <div>
-          <label for="colorPalette">Color Palette:</label>
-          <select formControlName="colorPalette" type="text">
+        <div class="colorInput">
+          <label for="selectedColor">Color Palette:</label>
+          <select
+            formControlName="selectedColor"
+            type="text"
+            id="selectedColor"
+          >
             <option value="normal">Normal</option>
-            <option value="bw">Black/White</option>
+            <option value="highContrast">Black/White</option>
           </select>
         </div>
         <div class="buttonContainer">

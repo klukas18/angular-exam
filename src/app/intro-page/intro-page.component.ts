@@ -19,27 +19,33 @@ import { TokenAuthService } from '../token-auth.service';
   templateUrl: './intro-page.component.html',
   styleUrl: './intro-page.component.scss',
 })
-export class IntroPageComponent {
+export class IntroPageComponent implements OnInit {
   constructor(
     private playerDataService: PlayerDataService,
     private tokenAuthService: TokenAuthService,
     private router: Router
   ) {}
 
+  ngOnInit(): void {
+    this.visitIntroPage();
+  }
+
+  visitIntroPage(): void {
+    console.log('visitIntroPage');
+    this.playerDataService.clearPlayerData();
+  }
+
   fb = inject(FormBuilder);
   playerName: string = '';
   studentID: string = '';
-  colorPalette: string = 'normal';
+  selectedColor: string = 'normal';
 
   playerForm: FormGroup = this.fb.group({
     playerName: ['', [Validators.required, Validators.minLength(5)]],
-    studentID: ['', [Validators.required]],
-    colorPalette: ['normal'],
+    studentID: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+    selectedColor: ['normal'],
   });
 
-  visitIntroPage(): void {
-    this.playerDataService.clearPlayerData();
-  }
   isPlayerNameInvalid(): boolean {
     const control = this.playerForm.get('playerName');
     return !!control && control.touched && control.invalid;
@@ -68,9 +74,9 @@ export class IntroPageComponent {
           this.playerForm.value.studentID!
         );
 
-        const colorPalette = this.playerForm.value.colorPalette;
-        localStorage.setItem('selectedColor', colorPalette);
-        this.router.navigate(['/game', colorPalette]);
+        const selectedColor = this.playerForm.value.selectedColor;
+        localStorage.setItem('selectedColor', selectedColor);
+        this.router.navigate(['/game', selectedColor]);
       } else {
         alert('Invalid ID');
         this.playerForm.patchValue({ playerName: '', studentID: '' });

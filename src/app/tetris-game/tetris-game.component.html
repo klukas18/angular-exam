@@ -124,8 +124,8 @@
     <div>
       <div class="highscores">
         <h3>Top 10 Highscores</h3>
-        <button (click)="sortHighscoresAsc()">Sort Asc.</button>
-        <button (click)="sortHighscoresDesc()">Sort Desc.</button>
+        <button (click)="sortHighscoresAsc()">/\</button>
+        <button (click)="sortHighscoresDesc()">\/</button>
         <div *ngFor="let score of highscores | slice : 0 : 10">
           {{ score.name }}: {{ score.score }}
         </div>

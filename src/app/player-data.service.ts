@@ -1,49 +1,3 @@
-// import { Injectable } from '@angular/core';
-
-// @Injectable({
-//   providedIn: 'root',
-// })
-// export class PlayerDataService {
-//   private _userInfoVerified: boolean = false;
-//   private _playerName: string = '';
-//   private _token: string = '';
-
-//   public get isVerified() {
-//     return this._userInfoVerified;
-//   }
-//   public verifyUser(): void {
-//     this._userInfoVerified = true;
-//   }
-//   public reset(): void {
-//     this._userInfoVerified = false;
-//     this.clearPlayerData();
-//   }
-
-//   constructor() {}
-
-//   setPlayerData(name: string, token: string): void {
-//     this._playerName = name;
-//     this._token = token;
-//   }
-
-//   getPlayerName(): string {
-//     return this._playerName;
-//   }
-
-//   getToken(): string {
-//     return this._token;
-//   }
-
-//   hasPlayerData(): boolean {
-//     return this._playerName !== '' && this._token !== '';
-//   }
-
-//   clearPlayerData(): void {
-//     this._playerName = '';
-//     this._token = '';
-//   }
-// }
-
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -87,6 +41,7 @@ export class PlayerDataService {
   clearPlayerData(): void {
     localStorage.removeItem('playerName');
     localStorage.removeItem('token');
+    localStorage.removeItem('selectedColor');
   }
 
   private loadPlayerData(): void {
